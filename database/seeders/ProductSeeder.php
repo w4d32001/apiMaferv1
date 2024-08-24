@@ -72,7 +72,7 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'Calamares',
             'description' => 'Calamares enteros, que incluyen el cuerpo, tentáculos y a menudo la piel. Ideal para asar, freír o preparar a la parrilla.',
-            'img' => 'http://127.0.0.1:8000/storage/images/cafe.jpg',
+            'img' => 'http://127.0.0.1:8000/storage/images/calamares.jpg',
             'price' => 15,
             'created_by' => 1,
             'updated_by' => 1,

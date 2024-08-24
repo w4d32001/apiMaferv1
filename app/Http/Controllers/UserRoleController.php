@@ -19,16 +19,19 @@ class UserRoleController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        
-        try {
-            $userRoles = UserRole::with('rol', 'user')->get();
-            return response()->json($userRoles);
-        } catch (Exception $e) {
-            Log::error('Error al obtener los roles de usuario: ' . $e->getMessage());
-            return response()->json(['message' => 'Error al obtener los roles de usuario'], 500);
-        }
+{
+    try {
+        $currentUserId = auth()->id();
+
+        $userRoles = UserRole::with('rol', 'user')
+            ->where('user_id', '!=', $currentUserId) 
+            ->get();
+
+        return response()->json($userRoles);
+    } catch (Exception $e) {
+        return response()->json(['message' => 'Error al obtener los roles de usuario'], 500);
     }
+}
 
     /**
      * Store a newly created resource in storage.

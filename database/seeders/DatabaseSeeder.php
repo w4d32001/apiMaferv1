@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             ProviderSeeder::class,
             CompanySeeder::class,
             DetailedProductSeeder::class,
-            InventorySeeder::class
+            InventorySeeder::class,
+            PaymentMethodSeeder::class
         ]);
     }
 }

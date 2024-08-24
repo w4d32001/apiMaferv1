@@ -11,12 +11,11 @@ class Order extends Model
     use HasFactory;
     protected $fillable = [
         'status',
-        'sale_id',
-        'user_role_id'
+        'sale_id'
     ];
 
-    public function userRole():BelongsTo
+    public function sale():BelongsTo
     {
-        return $this->belongsTo(UserRole::class);
+        return $this->belongsTo(Sale::class);
     }
 }

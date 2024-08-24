@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('surname');
+            $table->longText('image')->nullable();
             $table->char('dni', 8);
             $table->string('ruc')->nullable();
             $table->unsignedBigInteger('customer_type_id');
             $table->string('reason')->nullable();
             $table->string('address')->nullable();
-            $table->string('email');
+            $table->string('email')->unique();
+            $table->longText('password');
             $table->string('phone');
             $table->timestamps();
         });

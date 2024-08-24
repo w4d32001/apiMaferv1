@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Sale extends Model
 {
@@ -13,13 +14,13 @@ class Sale extends Model
         'total_sale',
         'total_quantity',
         'customer_id',
-        'detailed_product_id',
+        'inventory_id',
         'payment_method_id'
     ];
 
-    public function detailedProduct():BelongsTo
+    public function inventory():BelongsTo
     {
-        return $this->belongsTo(DetailedProduct::class);
+        return $this->belongsTo(Inventory::class);
     }
 
     public function paymentMethod():BelongsTo
@@ -30,6 +31,11 @@ class Sale extends Model
     public function customer():BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function orders():HasMany
+    {
+        return $this->hasMany(Order::class);
     }
     
 

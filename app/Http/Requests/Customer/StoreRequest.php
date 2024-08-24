@@ -24,13 +24,14 @@ class StoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'], 
             'surname' => ['required', 'string', 'max:255'],
-            'dni' => ['required', 'string', 'min:8', 'max:12'], 
-            'ruc' => ['nullable', 'string', 'size:11'], 
-            'customer_type_id' => ['required', 'integer', 'exists:customer_types,id'], 
+            'dni' => ['required', 'string', 'min:8', 'max:12', 'unique:customers,dni'], 
+            'ruc' => ['nullable', 'string', 'size:11'],
+            'image' => ['nullable'],
             'reason' => ['nullable', 'string', 'max:255'], 
+            'password'=> ['nullable'],
             'address' => ['nullable', 'string', 'max:255'], 
             'email' => ['required', 'string', 'email', 'max:255', 'unique:customers,email'], 
-            'phone' => ['required', 'string', 'regex:/^[0-9]{7,15}$/'],
+            'phone' => ['required', 'string'],
         ];
     }
 }

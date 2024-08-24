@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Customer extends Model
+class Customer extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 
+    public function isPerson()
+    {
+        return $this->role === 'client'; // Ajusta esto según tu lógica
+    }
     protected $fillable = [
         'name',
         'surname',
@@ -19,7 +25,9 @@ class Customer extends Model
         'customer_type_id',
         'reason',
         'address',
+        'image',
         'email',
+        'password',
         'phone'
     ];
 
@@ -35,8 +43,17 @@ class Customer extends Model
 
     public function comments():HasMany
     {
-        return $this->hasMany(Customer::class);
+        return $this->hasMany(Comment::class);
     }
 
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
 }

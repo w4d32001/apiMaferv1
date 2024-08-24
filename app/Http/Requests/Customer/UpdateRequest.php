@@ -21,15 +21,14 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $customerId = $this->route('customer'); 
+        $customerId = $this->route('customer')->id; 
     return [
         'name' => ['required', 'string', 'max:255'], 
         'surname' => ['required', 'string', 'max:255'], 
-        'dni' => ['required', 'string', 'min:8', 'max:12'], 
+        'dni' => ['required', 'string', 'min:8', 'max:12',"unique:customers,dni,{$customerId}"], 
         'ruc' => ['nullable', 'string', 'size:11'], 
-        'customer_type_id' => ['required', 'integer', 'exists:customer_types,id'], 
         'reason' => ['nullable', 'string', 'max:255'], 
-        'address' => ['nullable', 'string', 'max:255'],
+        'image' => ['nullable'],
         'email' => ['required', 'string', 'email', 'max:255', "unique:customers,email,{$customerId}"], 
         'phone' => ['nullable', 'string', 'regex:/^[0-9]{7,15}$/']
     ];

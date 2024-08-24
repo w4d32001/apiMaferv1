@@ -85,6 +85,9 @@ class CategoryController extends BaseController
     public function destroy(Category $category)
     {
         try {
+            if ($category->detailedProducts()->exists()) {
+                return $this->sendError('No se puede eliminar la categoría porque tiene productos detallados asociados.');
+            }
             $category->delete();
             return $this->sendResponse([], 'Categoría eliminada exitosamente');
         } catch (Exception $e) {

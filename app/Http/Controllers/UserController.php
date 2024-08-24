@@ -78,6 +78,9 @@ class UserController extends BaseController
     public function destroy(User $user)
     {
         try {
+            if($user->userRoles()->exists()){
+                return $this->sendError("Este usuario ya tiene un rol asigando, no se puede eliminar");
+            }
             $user->delete();
             return $this->sendResponse([], 'Usuario eliminado exitosamente');
         } catch (Exception $e) {

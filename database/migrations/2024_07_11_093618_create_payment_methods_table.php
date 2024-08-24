@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->char('status', 1);
+            $table->char('status', 1)->default(1);
             $table->timestamps();
         });
     }

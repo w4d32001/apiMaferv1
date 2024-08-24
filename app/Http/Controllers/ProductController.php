@@ -78,8 +78,8 @@ class ProductController extends BaseController
     public function destroy(Product $product)
     {
         try {
-            if ($product->img && $product->img !== $this->defaultImagePath) {
-                Storage::delete('public/' . $product->img);
+            if ($product->detailedProducts()->exists()) {
+                return $this->sendError('No se puede eliminar el producto porque tiene productos detallados asociados.');
             }
             $product->delete();
             return $this->sendResponse([], 'Producto eliminado exitosamente');

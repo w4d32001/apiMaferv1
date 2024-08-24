@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->char('status', 1)->default(0);
             $table->unsignedBigInteger('sale_id');
-            $table->unsignedBigInteger('user_role_id');
             $table->timestamps();
         });
     }

@@ -13,6 +13,11 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
+    public function isPerson()
+    {
+        return $this->role === 'user'; 
+    }
+
     use HasApiTokens, HasFactory, Notifiable;
 
     /**

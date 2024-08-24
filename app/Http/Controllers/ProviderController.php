@@ -97,6 +97,9 @@ class ProviderController extends BaseController
     public function destroy(Provider $provider)
     {
         try {
+            if ($provider->detailedProducts()->exists()) {
+                return $this->sendError('No se puede eliminar el proveedor porque tiene productos detallados asociados.');
+            }
             $provider->delete();
             return $this->sendResponse([], 'Proveedor eliminado exitosamente');
         } catch (Exception $e) {

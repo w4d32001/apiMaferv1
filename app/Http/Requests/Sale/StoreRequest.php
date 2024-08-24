@@ -36,9 +36,9 @@ class StoreRequest extends FormRequest
                 'required',
                 'exists:customers,id'
             ],
-            'detailed_product_id' => [
+            'inventory_id' => [
                 'required',
-                'exists:detailed_products,id'
+                'exists:inventories,id'
             ],
             'payment_method_id' => [
                 'required',

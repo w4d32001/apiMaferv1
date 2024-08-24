@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->decimal('total_sale');
+            $table->decimal('total_sale', 10,2);
             $table->integer('total_quantity');
             $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('detailed_product_id');
+            $table->unsignedBigInteger('inventory_id');
             $table->unsignedBigInteger('payment_method_id');
             $table->timestamps();
         });

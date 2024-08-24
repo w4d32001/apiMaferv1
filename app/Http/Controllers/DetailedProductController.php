@@ -81,6 +81,9 @@ class DetailedProductController extends BaseController
     public function destroy(DetailedProduct $detailedProduct)
     {
         try {
+            if($detailedProduct->invetories()->exists()){
+                return $this->sendError("Este dato no se puede eliminar por que esta asociado  a un inventario");
+            }
             $detailedProduct->delete();
             return $this->sendResponse([], 'Detalle producto eliminado correctamente');
         } catch (Exception $e) {
@@ -90,6 +93,7 @@ class DetailedProductController extends BaseController
     public function amount()
     {
         try{
+            
             $amount = DetailedProduct::count();
             return response()->json($amount);
         }catch(Exception $e)
