@@ -11,7 +11,8 @@ class Order extends Model
     use HasFactory;
     protected $fillable = [
         'status',
-        'sale_id'
+        'sale_id',
+        'image'
     ];
 
     public function sale():BelongsTo

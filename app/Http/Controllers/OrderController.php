@@ -17,8 +17,7 @@ class OrderController extends BaseController
         try {
             $orders = Order::with(['sale.inventory.detailedProduct.product', 'sale.customer'])->get();
             return $this->sendResponse($orders, "Lista de pedidos");
-        }  catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return $this->sendError($e->getMessage());
         }
     }
@@ -36,23 +35,23 @@ class OrderController extends BaseController
      */
     public function show(Order $order, Customer $customer)
     {
-        $order = Order::with(['sale.inventory.detailedProduct.product', 'sale.customer'])  
-        ->where('customer_id', $customer->id)
-        ->get();
+        $order = Order::with(['sale.inventory.detailedProduct.product', 'sale.customer'])
+            ->where('customer_id', $customer->id)
+            ->get();
 
-    return $this->sendResponse($order, 'Ventas por cliente');
+        return $this->sendResponse($order, 'Ventas por cliente');
     }
 
     public function showCustomer(Customer $customer)
-{
-    $orders = Order::with(['sale.inventory.detailedProduct.product', 'sale.customer'])
-        ->whereHas('sale', function($query) use ($customer) {
-            $query->where('customer_id', $customer->id);
-        })
-        ->get();
+    {
+        $orders = Order::with(['sale.inventory.detailedProduct.product', 'sale.customer'])
+            ->whereHas('sale', function ($query) use ($customer) {
+                $query->where('customer_id', $customer->id);
+            })
+            ->get();
 
-    return $this->sendResponse($orders, 'Ventas por cliente');
-}
+        return $this->sendResponse($orders, 'Ventas por cliente');
+    }
 
     /**
      * Update the specified resource in storage.
@@ -70,7 +69,8 @@ class OrderController extends BaseController
         //
     }
 
-    public function orderPay(int $id){
+    public function orderPay(int $id)
+    {
         try {
             $order = Order::find($id);
             if (!$order) {
@@ -83,5 +83,28 @@ class OrderController extends BaseController
         }
     }
 
+    public function updateImage(Request $request, $id)
+    {
+        // Validación de la solicitud
+        $request->validate([
+            'image' => 'required|string' // Validar que la imagen es una cadena
+        ]);
 
+        try {
+            $order = Order::find($id);
+            if (!$order) {
+                return $this->sendError('Orden no encontrada', 404);
+            }
+
+            // Obtiene la cadena de imagen base64 del request
+            $base64Image = $request->input('image');
+
+            // Actualiza la orden con la cadena base64
+            $order->update(['image' => $base64Image]);
+
+            return $this->sendResponse($order, 'Estado de la orden actualizado con éxito');
+        } catch (Exception $e) {
+            return $this->sendError('Error al actualizar el estado de la orden: ' . $e->getMessage(), 500);
+        }
+    }
 }

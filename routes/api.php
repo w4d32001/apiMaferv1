@@ -14,6 +14,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
@@ -96,3 +97,5 @@ Route::middleware('auth')->group(function() {
     Route::post('/validate', [PaymentController::class, 'apiValidate']);
     Route::post('/paid', [PaymentController::class, 'paid']);
     Route::post('/ipn', [PaymentController::class, 'ipn']);
+    Route::get('/report/sale', [ReportController::class, 'reporteVentas']);
+    Route::match(['put', 'patch'], 'order/updateImage/{id}', [OrderController::class, 'updateImage']);
