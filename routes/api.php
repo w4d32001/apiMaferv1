@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function() {
     Route::apiResource('user', UserController::class);
     Route::apiResource('userRole', UserRoleController::class);
     Route::put('userRole/role/{rol}', [UserRoleController::class, 'role']);
+    Route::match(['put', 'patch'], 'user/updateImage/{id}', [UserController::class, 'updateImage']);
 });
 
     Route::apiResource('inventory', InventoryController::class);

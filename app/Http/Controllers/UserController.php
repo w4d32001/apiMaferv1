@@ -9,7 +9,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Http\Request;
 class UserController extends BaseController
 {
     public function __construct()
@@ -85,6 +85,31 @@ class UserController extends BaseController
             return $this->sendResponse([], 'Usuario eliminado exitosamente');
         } catch (Exception $e) {
             return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function updateImage(Request $request, $id)
+    {
+        // Validación de la solicitud
+        $request->validate([
+            'img' => 'required|string' // Validar que la imgn es una cadena
+        ]);
+
+        try {
+            $order = User::find($id);
+            if (!$order) {
+                return $this->sendError('Orden no encontrada', 404);
+            }
+
+            // Obtiene la cadena de imgn base64 del request
+            $base64img = $request->input('img');
+
+            // Actualiza la orden con la cadena base64
+            $order->update(['img' => $base64img]);
+
+            return $this->sendResponse($order, 'Estado de la orden actualizado con éxito');
+        } catch (Exception $e) {
+            return $this->sendError('Error al actualizar el estado de la orden: ' . $e->getMessage(), 500);
         }
     }
 }

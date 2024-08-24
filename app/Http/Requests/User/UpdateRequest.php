@@ -27,7 +27,7 @@ class UpdateRequest extends FormRequest
             'addres' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $this->user->id,
             'password' => 'sometimes|nullable|string|min:8|confirmed',
-            'gender' => 'required|numeric|in:0,1,2', 
+            'gender' => 'sometimes|numeric|in:0,1,2', 
             'img' => 'nullable'
         ];
     }
